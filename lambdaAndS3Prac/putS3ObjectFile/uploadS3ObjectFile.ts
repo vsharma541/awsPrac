@@ -32,6 +32,8 @@ const handler = async (event: any): Promise<any> => {
         console.log(JSON.stringify(error, ['message']));
     }
 }
+
+// uncomment below to run the file in local system
 // handler({});
 
 export {handler};

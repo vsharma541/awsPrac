@@ -8,3 +8,6 @@ onenote:https://d.docs.live.net/102ac61679af23ae/Documents/Vaibhav's%20Notebook/
      
 **b) putS3ObjectFile** -> https://onedrive.live.com/view.aspx?resid=102AC61679AF23AE%21127&id=documents&wd=target%28AWS%20related.one%7CD7504DEE-E625-477C-998A-E27D06219DF2%2FAdd%20file%20in%20S3%20bucket%7CFE68D599-E12F-4ECD-B535-F440F89E04FA%2F%29
 onenote:https://d.docs.live.net/102ac61679af23ae/Documents/Vaibhav's%20Notebook/AWS%20related.one#Add%20file%20in%20S3%20bucket&section-id={D7504DEE-E625-477C-998A-E27D06219DF2}&page-id={FE68D599-E12F-4ECD-B535-F440F89E04FA}&end
+
+**c) readS3ObjectFile** -> https://onedrive.live.com/view.aspx?resid=102AC61679AF23AE%21127&id=documents&wd=target%28AWS%20related.one%7CD7504DEE-E625-477C-998A-E27D06219DF2%2FRead%20the%20file%20in%20S3%20bucket%7CDDA46C56-0814-4F9D-A91B-E73C3C2DC524%2F%29
+onenote:https://d.docs.live.net/102AC61679AF23AE/Documents/Vaibhav's%20Notebook/AWS%20related.one#Read%20the%20file%20in%20S3%20bucket&section-id={D7504DEE-E625-477C-998A-E27D06219DF2}&page-id={DDA46C56-0814-4F9D-A91B-E73C3C2DC524}&end

@@ -1,0 +1,16 @@
+service: lambdaLayerServerlessPrac2
+frameworkVersion: "4.8.0"
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+
+layers:
+  vsrNewCommon:
+    path: nodejs
+
+functions:
+  vsrLambda:
+    handler: Services/service1/index.handler
+    layers:
+      - !Ref VsrNewCommonLambdaLayer

@@ -1,0 +1,242 @@
+{
+  "service": {
+    "service": "lambdaLayerServerlessPrac2",
+    "serviceObject": {
+      "name": "lambdaLayerServerlessPrac2"
+    },
+    "provider": {
+      "name": "aws",
+      "runtime": "nodejs20.x",
+      "stage": "dev",
+      "region": "us-east-1",
+      "versionFunctions": true,
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "VsrLambdaLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/lambdaLayerServerlessPrac2-dev-vsrLambda"
+            }
+          },
+          "IamRoleLambdaExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                        "lambda.amazonaws.com"
+                      ]
+                    },
+                    "Action": [
+                      "sts:AssumeRole"
+                    ]
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": {
+                    "Fn::Join": [
+                      "-",
+                      [
+                        "lambdaLayerServerlessPrac2",
+                        "dev",
+                        "lambda"
+                      ]
+                    ]
+                  },
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:CreateLogStream",
+                          "logs:CreateLogGroup",
+                          "logs:TagResource"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/lambdaLayerServerlessPrac2-dev*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:PutLogEvents"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/lambdaLayerServerlessPrac2-dev*:*:*"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "Path": "/",
+              "RoleName": {
+                "Fn::Join": [
+                  "-",
+                  [
+                    "lambdaLayerServerlessPrac2",
+                    "dev",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    "lambdaRole"
+                  ]
+                ]
+              }
+            }
+          },
+          "VsrNewCommonLambdaLayer": {
+            "Type": "AWS::Lambda::LayerVersion",
+            "Properties": {
+              "Content": {
+                "S3Bucket": "serverless-framework-deployments-us-east-1-a1755063-705b",
+                "S3Key": "serverless/lambdaLayerServerlessPrac2/dev/1741977835231-2025-03-14T18:43:55.231Z/vsrNewCommon.zip"
+              },
+              "LayerName": "vsrNewCommon"
+            }
+          },
+          "VsrLambdaLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-us-east-1-a1755063-705b",
+                "S3Key": "serverless/lambdaLayerServerlessPrac2/dev/1741978222030-2025-03-14T18:50:22.030Z/lambdaLayerServerlessPrac2.zip"
+              },
+              "Handler": "Services/service1/index.handler",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "lambdaLayerServerlessPrac2-dev-vsrLambda",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Layers": [
+                {
+                  "Ref": "VsrNewCommonLambdaLayer"
+                }
+              ]
+            },
+            "DependsOn": [
+              "VsrLambdaLogGroup"
+            ]
+          },
+          "VsrLambdaLambdaVersionTMDGhhHb8YNjQjTBX1Ih6BocMhkMWyMccwuYcrHO0zQ": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "VsrLambdaLambdaFunction"
+              },
+              "CodeSha256": "4TlIQN9OHnas2BTFTeD2OpFv2g5IYphWGAuSfLuEVik="
+            }
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": "serverless-framework-deployments-us-east-1-a1755063-705b",
+            "Export": {
+              "Name": "sls-lambdaLayerServerlessPrac2-dev-ServerlessDeploymentBucketName"
+            }
+          },
+          "VsrNewCommonLambdaLayerQualifiedArn": {
+            "Description": "Current Lambda layer version",
+            "Value": {
+              "Ref": "VsrNewCommonLambdaLayer"
+            },
+            "Export": {
+              "Name": "sls-lambdaLayerServerlessPrac2-dev-VsrNewCommonLambdaLayerQualifiedArn"
+            }
+          },
+          "VsrNewCommonLambdaLayerHash": {
+            "Description": "Current Lambda layer hash",
+            "Value": "5e35bec320221b9cdad666786428e27be188caf3",
+            "Export": {
+              "Name": "sls-lambdaLayerServerlessPrac2-dev-VsrNewCommonLambdaLayerHash"
+            }
+          },
+          "VsrNewCommonLambdaLayerS3Key": {
+            "Description": "Current Lambda layer S3Key",
+            "Value": "serverless/lambdaLayerServerlessPrac2/dev/1741977835231-2025-03-14T18:43:55.231Z/vsrNewCommon.zip",
+            "Export": {
+              "Name": "sls-lambdaLayerServerlessPrac2-dev-VsrNewCommonLambdaLayerS3Key"
+            }
+          },
+          "VsrLambdaLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "VsrLambdaLambdaVersionTMDGhhHb8YNjQjTBX1Ih6BocMhkMWyMccwuYcrHO0zQ"
+            },
+            "Export": {
+              "Name": "sls-lambdaLayerServerlessPrac2-dev-VsrLambdaLambdaFunctionQualifiedArn"
+            }
+          }
+        }
+      },
+      "vpc": {}
+    },
+    "pluginsData": {},
+    "functions": {
+      "vsrLambda": {
+        "handler": "Services/service1/index.handler",
+        "layers": {
+          "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"VsrLambdaLambdaFunction\"][\"Properties\"][\"Layers\"]"
+        },
+        "events": [],
+        "name": "lambdaLayerServerlessPrac2-dev-vsrLambda",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs20.x",
+        "vpc": {},
+        "versionLogicalId": "VsrLambdaLambdaVersionTMDGhhHb8YNjQjTBX1Ih6BocMhkMWyMccwuYcrHO0zQ"
+      }
+    },
+    "configValidationMode": "warn",
+    "serviceFilename": "serverless",
+    "initialServerlessConfig": {
+      "service": "lambdaLayerServerlessPrac2",
+      "frameworkVersion": "4.8.0",
+      "provider": {
+        "$ref": "$[\"service\"][\"provider\"]"
+      },
+      "layers": {
+        "vsrNewCommon": {
+          "path": "nodejs",
+          "package": {
+            "artifact": "C:\\Codebases\\lambda-layer-serverless\\.serverless\\vsrNewCommon.zip"
+          },
+          "artifactAlreadyUploaded": true
+        }
+      },
+      "functions": {
+        "$ref": "$[\"service\"][\"functions\"]"
+      }
+    },
+    "appId": null,
+    "orgId": null,
+    "layers": {
+      "$ref": "$[\"service\"][\"initialServerlessConfig\"][\"layers\"]"
+    },
+    "artifact": "C:\\Codebases\\lambda-layer-serverless\\.serverless\\lambdaLayerServerlessPrac2.zip"
+  },
+  "package": {
+    "artifactDirectoryName": "serverless/lambdaLayerServerlessPrac2/dev/1741978222030-2025-03-14T18:50:22.030Z",
+    "artifact": "lambdaLayerServerlessPrac2.zip"
+  }
+}
